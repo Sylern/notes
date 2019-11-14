@@ -72,23 +72,23 @@ mysqladmin -u root password "new_password";
 /***********************/
 
 #创建用户方式与设置授权
-	#创建用户（aXin0810  /  www.aXin0810.cn）
-	create user 'aXin0810'@'localhost' IDENTIFIED BY 'www.aXin0810.cn';
+	#创建用户（aXin0810  /  密码。。。。。。）
+	create user 'aXin0810'@'localhost' IDENTIFIED BY '密码。。。。。。';
 	
-	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  www.aXin0810.cn）本地可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
-	GRANT USAGE ON *.* TO 'aXin0810'@'localhost' IDENTIFIED BY 'www.aXin0810.cn' WITH GRANT OPTION;
+	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  密码。。。。。。）本地可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
+	GRANT USAGE ON *.* TO 'aXin0810'@'localhost' IDENTIFIED BY '密码。。。。。。' WITH GRANT OPTION;
 	
-	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  www.aXin0810.cn）任意主机可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
-	GRANT USAGE ON *.* TO 'aXin0810'@'%' IDENTIFIED BY 'www.aXin0810.cn' WITH GRANT OPTION;
+	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  密码。。。。。。）任意主机可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
+	GRANT USAGE ON *.* TO 'aXin0810'@'%' IDENTIFIED BY '密码。。。。。。' WITH GRANT OPTION;
 	
-	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  www.aXin0810.cn）指定10.246.34.85主机可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
-	GRANT USAGE ON *.* TO 'aXin0810'@'10.246.34.85' IDENTIFIED BY 'www.aXin0810.cn' WITH GRANT OPTION;
+	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  密码。。。。。。）指定10.246.34.85主机可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
+	GRANT USAGE ON *.* TO 'aXin0810'@'10.246.34.85' IDENTIFIED BY '密码。。。。。。' WITH GRANT OPTION;
 	
-	#授予用户（aXin0810  /  www.aXin0810.cn）任意主机(ALL PRIVILEGES全部权限不可以传递权限)
-	GRANT ALL PRIVILEGES ON *.* TO 'aXin0810'@'%' IDENTIFIED BY 'www.aXin0810.cn';
+	#授予用户（aXin0810  /  密码。。。。。。）任意主机(ALL PRIVILEGES全部权限不可以传递权限)
+	GRANT ALL PRIVILEGES ON *.* TO 'aXin0810'@'%' IDENTIFIED BY '密码。。。。。。';
 	
-	#授予用户（aXin0810  /  www.aXin0810.cn）通过外网IP对数据库'testdb'的(ALL PRIVILEGES全部权限不可以传递权限)
-	GRANT ALL PRIVILEGES ON testdb.* TO 'aXin0810'@'%' IDENTIFIED BY 'www.aXin0810.cn';
+	#授予用户（aXin0810  /  密码。。。。。。）通过外网IP对数据库'testdb'的(ALL PRIVILEGES全部权限不可以传递权限)
+	GRANT ALL PRIVILEGES ON testdb.* TO 'aXin0810'@'%' IDENTIFIED BY '密码。。。。。。';
 	
 	#授予用户“aXin0810”通过外网IP对于该数据库“testdb”中表的创建、修改、删除权限,以及表数据的增删查改权限
 	grant create,alter,drop,select,insert,update,delete on testdb.* to 'aXin0810'@'%';
@@ -106,10 +106,10 @@ drop user 'aXin0810'@'%';
 /***********************/
 
 #更改密码
-#方法1，密码实时更新；修改用户“aXin0810”的密码为“www.aXin0810.cn”
-set password for aXin0810 =password('www.aXin0810.cn');
-#方法2，需要刷新；修改用户“aXin0810”的密码为“www.aXin0810.cn”
-update  mysql.user set  password=password('www.aXin0810.cn')  where user='aXin0810'
+#方法1，密码实时更新；修改用户“aXin0810”的密码为“密码。。。。。。”
+set password for aXin0810 =password('密码。。。。。。');
+#方法2，需要刷新；修改用户“aXin0810”的密码为“密码。。。。。。”
+update  mysql.user set  password=password('密码。。。。。。')  where user='aXin0810'
 #刷新MySQL的系统权限相关表
 flush privileges;
 
