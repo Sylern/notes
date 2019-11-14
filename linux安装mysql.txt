@@ -1,0 +1,119 @@
+一、安装
+
+#安装前，我们可以检测系统是否自带安装 MySQL
+rpm -qa | grep mysql
+
+#（非必要）如果你系统有安装，那可以选择进行卸载:
+rpm -e mysql　　// 普通删除模式
+rpm -e --nodeps mysql　　// 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除
+
+#下载mysql安装包
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+
+#安装rpm包并且显示过程进度 #其中i表示安装，v表示显示安装过程，h表示显示进度
+rpm -ivh mysql-community-release-el7-5.noarch.rpm
+
+#升级所有包同时也升级软件和系统内核
+yum update
+
+#安装mysql-server
+yum install mysql-server
+
+#权限设置：通过chown改变文件的拥有者和群组。（chown [选项]... [所有者][:[组]] 文件...）
+chown mysql:mysql -R /var/lib/mysql
+
+
+
+二、启动运行
+
+#初始化 MySQL
+mysqld --initialize
+
+	附属：可能会遇到报错(解决报错后再次执行初始化)
+	(1) TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+	原因：
+	解决办法：
+	配置文件 vim /etc/my.cnf 增加
+	[mysqld]
+	explicit_defaults_for_timestamp=true
+	
+	(2)  Fatal error: Please read "Security" section of the manual to find out how to run mysqld as root!
+	原因：
+	解决办法：
+	配置文件 vim /etc/my.cnf 增加
+	[mysqld]
+	user=mysql
+	
+# 测试使用 mysql 命令连接到 MySQL 服务器上，默认情况下 MySQL 服务器的登录密码为空
+mysql
+	
+	附属：可能会遇到报错(解决报错后再次执行连接)
+	(1) Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock'
+	原因：
+	解决办法：
+	#停止mysqld
+	#再次启动mysqld
+
+#扩展
+systemctl start mysqld  	#启动mysqld
+systemctl stop mysqld  		#停止mysqld
+systemctl restart mysqld  	#重启mysqld
+systemctl enable mysqld  	#设置开机启动
+systemctl status mysqld		#查看 MySQL 运行状态
+
+
+
+三、设置配置数据库
+
+#Mysql安装成功后，默认的root用户密码为空，你可以使用以下命令来创建root用户的密码
+#退出mysql执行
+mysqladmin -u root password "new_password";
+
+/***********************/
+
+#创建用户方式与设置授权
+	#创建用户（aXin0810  /  www.aXin0810.cn）
+	create user 'aXin0810'@'localhost' IDENTIFIED BY 'www.aXin0810.cn';
+	
+	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  www.aXin0810.cn）本地可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
+	GRANT USAGE ON *.* TO 'aXin0810'@'localhost' IDENTIFIED BY 'www.aXin0810.cn' WITH GRANT OPTION;
+	
+	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  www.aXin0810.cn）任意主机可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
+	GRANT USAGE ON *.* TO 'aXin0810'@'%' IDENTIFIED BY 'www.aXin0810.cn' WITH GRANT OPTION;
+	
+	#GRANT USAGE ON *.* TO创建用户并且授权（aXin0810  /  www.aXin0810.cn）指定10.246.34.85主机可以连接(只有USAGE连接权限 并且 WITH GRANT OPTION可以传递授权权限)
+	GRANT USAGE ON *.* TO 'aXin0810'@'10.246.34.85' IDENTIFIED BY 'www.aXin0810.cn' WITH GRANT OPTION;
+	
+	#授予用户（aXin0810  /  www.aXin0810.cn）任意主机(ALL PRIVILEGES全部权限不可以传递权限)
+	GRANT ALL PRIVILEGES ON *.* TO 'aXin0810'@'%' IDENTIFIED BY 'www.aXin0810.cn';
+	
+	#授予用户（aXin0810  /  www.aXin0810.cn）通过外网IP对数据库'testdb'的(ALL PRIVILEGES全部权限不可以传递权限)
+	GRANT ALL PRIVILEGES ON testdb.* TO 'aXin0810'@'%' IDENTIFIED BY 'www.aXin0810.cn';
+	
+	#授予用户“aXin0810”通过外网IP对于该数据库“testdb”中表的创建、修改、删除权限,以及表数据的增删查改权限
+	grant create,alter,drop,select,insert,update,delete on testdb.* to 'aXin0810'@'%';
+
+#刷新MySQL的系统权限相关表
+flush privileges;
+
+/***********************/
+
+#删除用户“aXin0810”
+drop user 'aXin0810'@'localhost';
+#若创建的用户允许任何电脑登陆，删除用户如下
+drop user 'aXin0810'@'%';
+
+/***********************/
+
+#更改密码
+#方法1，密码实时更新；修改用户“aXin0810”的密码为“www.aXin0810.cn”
+set password for aXin0810 =password('www.aXin0810.cn');
+#方法2，需要刷新；修改用户“aXin0810”的密码为“www.aXin0810.cn”
+update  mysql.user set  password=password('www.aXin0810.cn')  where user='aXin0810'
+#刷新MySQL的系统权限相关表
+flush privileges;
+
+/***********************/
+
+#查看用户“aXin0810”
+show grants for aXin0810;
