@@ -18,3 +18,5 @@ sudo systemctl restart nginx.service
 sudo systemctl reload nginx.service
 #设置开机自动运行
 sudo systemctl enable nginx.service
+
+附属：启动之前查看80端口是否被占用
