@@ -1,0 +1,26 @@
+#进入usr目录
+cd /usr
+
+#下载node-v12.10.0包
+wget https://nodejs.org/dist/v12.10.0/node-v12.10.0-linux-x64.tar.xz
+
+#解压node包
+tar xf node-v12.10.0-linux-x64.tar.xz
+
+#修改文件夹名称
+mv node-v12.10.0-linux-x64 nodejs
+
+#设置软连接
+ln -s /usr/nodejs/bin/node  /usr/local/bin/
+ln -s /usr/nodejs/bin/npm  /usr/local/bin/
+
+#安装全局依赖包
+#安装cnpm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+#设置软连接
+ln -s /usr/nodejs/bin/cnpm  /usr/local/bin/
+
+#安装pm2
+npm install -g pm2
+#设置软连接
+ln -s /usr/nodejs/bin/pm2  /usr/local/bin/

@@ -1,0 +1,20 @@
+#添加源
+#Nginx官网提供了Centos的源地址。因此可以如下执行命令添加源
+sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+#查看是否已经添加源成功
+yum search nginx
+
+#安装Nginx
+sudo yum install -y nginx
+
+#启动Nginx
+sudo systemctl start nginx.service
+#停止nginx服务
+sudo systemctl stop nginx.service
+#重启nginx服务
+sudo systemctl restart nginx.service
+#重新读取nginx配置(这个最常用, 不用停止nginx服务就能使修改的配置生效)
+sudo systemctl reload nginx.service
+#设置开机自动运行
+sudo systemctl enable nginx.service
