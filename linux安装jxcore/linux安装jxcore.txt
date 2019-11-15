@@ -1,0 +1,21 @@
+#把jx_64v8.zip上传到usr根目录
+
+#解压zip文件
+unzip jx_64v8.zip
+
+#设置软连接
+cp jx_64v8/jx /usr/bin
+
+#设置PATH变量适当地运行JX在你喜欢任何地方
+export PATH=$PATH:/usr/bin
+
+#验证安装
+jx --version
+
+/****************************************/
+
+#打包语法
+jx package index.js index
+
+#运行jx文件
+jx index.jx command_line_arguments
