@@ -24,3 +24,16 @@ ln -s /usr/nodejs/bin/cnpm  /usr/local/bin/
 npm install -g pm2
 #设置软连接
 ln -s /usr/nodejs/bin/pm2  /usr/local/bin/
+
+#安装pkg
+npm install -g pkg
+#设置软连接
+ln -s /usr/nodejs/bin/pkg  /usr/local/bin/
+    #打包linux,macos,win3个平台的可执行文件
+    pkg index.js
+    #打包linux平台
+    pkg -t linux index.js
+    #打包macos平台
+    pkg -t macos index.js
+    #打包win平台
+    pkg -t win index.js
